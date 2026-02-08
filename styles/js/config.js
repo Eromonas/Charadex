@@ -46,7 +46,7 @@ charadex.sheet = {
     statuses: ['All', 'Resell', 'Trade', 'Gift', 'Voided', 'Purchased', 'Created'],
     rarity: ['All', 'Common', 'Uncommon', 'Rare', 'Ultra Rare', 'Legendary'],
     species: ['All', 'Normal', 'Shattered', 'Fallen'],
-    itemTypes: ['All', 'Currency', 'MYO Slot', 'Trait', 'Misc'],
+    itemTypes: ['All', 'MYO Slot', 'Trait', 'Misc'],
     traitTypes: ['All', 'Ears', 'Halo', 'Horns', 'Wings', 'Tail', 'Mutations', 'Seasonal', 'Event',]
 
   }
