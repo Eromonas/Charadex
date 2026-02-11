@@ -37,15 +37,28 @@ charadex.buildList = (selector = 'charadex') => {
     // Helper to detect CW in an entry (checks common tag fields, arrays, and comma-separated strings)
     const isCW = (entry) => {
       if (!entry) return false;
-      if (entry.cw === true) return true;
-      const scrub = charadex.tools.scrub;
+
+      // Safe scrub wrapper: only scrub strings/numbers, else return null
+      const safeScrub = (val) => {
+        if (val === null || val === undefined) return null;
+        if (typeof val === 'string' || typeof val === 'number') return charadex.tools.scrub(String(val));
+        return null;
+      };
+
+      if (safeScrub(entry.cw) === 'true' || entry.cw === true) return true;
+
       for (let k in entry) {
         const v = entry[k];
         if (Array.isArray(v)) {
-          if (v.map(i => scrub(i)).includes('cw')) return true;
-        } else if (typeof v === 'string') {
-          if (scrub(v) === 'cw') return true;
-          if (v.split(',').map(i => scrub(i)).includes('cw')) return true;
+          // Check array elements safely
+          const scrubs = v.map(i => safeScrub(i)).filter(i => i !== null);
+          if (scrubs.includes('cw')) return true;
+        } else if (typeof v === 'string' || typeof v === 'number') {
+          const s = safeScrub(v);
+          if (s === 'cw') return true;
+          // handle comma-separated lists
+          const parts = String(v).split(',').map(p => charadex.tools.scrub(p));
+          if (parts.includes('cw')) return true;
         }
       }
       return false;
@@ -144,21 +157,31 @@ charadex.buildList = (selector = 'charadex') => {
     try {
       const entry = profileArray[0];
       const scrub = charadex.tools.scrub;
+      // Safe isCW for profile (mirrors gallery logic)
+      const safeScrub = (val) => {
+        if (val === null || val === undefined) return null;
+        if (typeof val === 'string' || typeof val === 'number') return scrub(String(val));
+        return null;
+      };
+
       const isCW = (e) => {
         if (!e) return false;
-        if (e.cw === true) return true;
+        if (safeScrub(e.cw) === 'true' || e.cw === true) return true;
         for (let k in e) {
           const v = e[k];
           if (Array.isArray(v)) {
-            if (v.map(i => scrub(i)).includes('cw')) return true;
-          } else if (typeof v === 'string') {
-            if (scrub(v) === 'cw') return true;
-            if (v.split(',').map(i => scrub(i)).includes('cw')) return true;
+            const scrubs = v.map(i => safeScrub(i)).filter(i => i !== null);
+            if (scrubs.includes('cw')) return true;
+          } else if (typeof v === 'string' || typeof v === 'number') {
+            const s = safeScrub(v);
+            if (s === 'cw') return true;
+            const parts = String(v).split(',').map(p => scrub(p));
+            if (parts.includes('cw')) return true;
           }
         }
         return false;
       };
-
+    
       if (isCW(entry)) {
         const applyBlurToProfile = () => {
           listInstance.items.forEach((item) => {
