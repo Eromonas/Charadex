@@ -864,7 +864,7 @@ p:last-child {
 }
 
 #footer p:first-of-type::after {
-  content: "CSS by Lunashere";
+  content: "CSS by Lunyavera";
   display: block;
   margin-top: 0.25rem;
   opacity: 0.7;
