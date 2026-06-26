@@ -47,7 +47,7 @@ charadex.sheet = {
     rarity: ['All', 'Common', 'Uncommon', 'Rare', 'Ultra Rare', 'Legendary'],
     species: ['All', 'Normal', 'Shattered', 'Fallen'],
     itemTypes: ['All', 'MYO Slot', 'Trait'],
-    traitTypes: ['All', 'Ears', 'Halo', 'Horns', 'Wings', 'Tail', 'Mutations', 'Seasonal', 'Event',]
+    traitTypes: ['All', 'Base', 'Animal', 'Ocean', 'Plant', 'Jurassic', 'Extra', 'Angelic', 'Sweets', 'Transparency', 'Moving', 'Elemental', 'Space', 'Gem', 'Spooky', 'Valentines']
 
   }
 
